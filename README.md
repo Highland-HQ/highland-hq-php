@@ -1,5 +1,5 @@
 # Highland Ecommerce Platform
 
-## :rocket: Up and Running
+## 🚀 Up and Running
 
 `Soon...`
