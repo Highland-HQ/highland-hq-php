@@ -3,5 +3,19 @@
 @tailwind utilities;
 
 [x-cloak] {
-    display: none;
+  display: none;
+}
+
+input {
+  border: none;
+  outline: none;
+  border-color: transparent;
+  padding-left: 0 !important;
+}
+
+input[type='email']:focus,
+input[type='text']:focus,
+input[type='search']:focus,
+input[type='password']:focus {
+  box-shadow: none;
 }

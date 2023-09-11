@@ -30,7 +30,7 @@ export default function ResetPassword({ token, email }: Props) {
   }
 
   return (
-    <AuthenticationCard>
+    <AuthenticationCard heading="Reset Your Password">
       <Head title="Reset Password" />
 
       <form onSubmit={onSubmit}>

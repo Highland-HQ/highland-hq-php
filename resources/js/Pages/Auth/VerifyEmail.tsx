@@ -20,7 +20,7 @@ export default function VerifyEmail({ status }: Props) {
   }
 
   return (
-    <AuthenticationCard>
+    <AuthenticationCard heading="Verify Your Email">
       <Head title="Email Verification" />
 
       <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">

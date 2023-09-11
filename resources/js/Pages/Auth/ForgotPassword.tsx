@@ -7,6 +7,7 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
+import { Button, Input } from '@nextui-org/react';
 
 interface Props {
   status: string;
@@ -24,13 +25,12 @@ export default function ForgotPassword({ status }: Props) {
   }
 
   return (
-    <AuthenticationCard>
+    <AuthenticationCard heading="Forgot Your Password?">
       <Head title="Forgot Password" />
 
       <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        Forgot your password? No problem. Just let us know your email address
-        and we will email you a password reset link that will allow you to
-        choose a new one.
+        No problem. Just let us know your email address and we will email you a
+        password reset link that will allow you to choose a new one.
       </div>
 
       {status && (
@@ -40,27 +40,29 @@ export default function ForgotPassword({ status }: Props) {
       )}
 
       <form onSubmit={onSubmit}>
-        <div>
-          <InputLabel htmlFor="email">Email</InputLabel>
-          <TextInput
-            id="email"
+        <div className=" mb-4">
+          <Input
+            required
             type="email"
-            className="mt-1 block w-full"
+            variant="bordered"
+            label="Email"
+            size="md"
             value={form.data.email}
             onChange={e => form.setData('email', e.currentTarget.value)}
-            required
-            autoFocus
+            validationState={form.errors.email ? 'invalid' : 'valid'}
+            errorMessage={form.errors.email}
           />
-          <InputError className="mt-2" message={form.errors.email} />
         </div>
 
-        <div className="flex items-center justify-end mt-4">
-          <PrimaryButton
-            className={classNames({ 'opacity-25': form.processing })}
+        <div className="flex items-center justify-end">
+          <Button
+            type="submit"
+            variant="solid"
+            color="primary"
             disabled={form.processing}
           >
             Email Password Reset Link
-          </PrimaryButton>
+          </Button>
         </div>
       </form>
     </AuthenticationCard>

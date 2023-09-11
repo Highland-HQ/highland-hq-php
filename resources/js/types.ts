@@ -30,9 +30,9 @@ export interface Auth {
     User & {
       all_teams?: Team[];
       current_team?: Team;
-      permissions: any;
     }
   >;
+  abilities: string[];
 }
 
 export type InertiaSharedProps<T = {}> = T & {
@@ -52,6 +52,7 @@ export type InertiaSharedProps<T = {}> = T & {
   auth: Auth;
   errorBags: any;
   errors: any;
+  assets: string[];
 };
 
 export interface Session {

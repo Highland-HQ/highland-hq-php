@@ -20,7 +20,6 @@ interface Props {
 
 export const StorefrontLayout = ({
   title,
-  renderHeader,
   children,
 }: PropsWithChildren<Props>) => {
   const route = useRoute();

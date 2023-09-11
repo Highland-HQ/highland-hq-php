@@ -40,7 +40,7 @@ export default function TwoFactorChallenge() {
   }
 
   return (
-    <AuthenticationCard>
+    <AuthenticationCard heading="Two-Factor Confirmation">
       <Head title="Two-Factor Confirmation" />
 
       <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
