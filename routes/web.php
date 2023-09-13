@@ -1,5 +1,14 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\CollectionsController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DiscountsController;
+use App\Http\Controllers\MarketingController;
+use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\VendorsController;
+use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -54,48 +63,36 @@ Route::middleware([
         config('jetstream.auth_session'),
         'verified',
       ])->group(function () {
-        Route::get('/', function () {
-          return Inertia::render('Dashboard/Index');
-        })->name('dashboard');
-      });
+        Route::get('/', [DashboardController::class, 'index'])->name(
+          'dashboard.index'
+        );
 
-      Route::resource('products', ProductsController::class);
+        Route::resource('products', ProductsController::class);
+
+        Route::resource('collections', CollectionsController::class);
+
+        Route::resource('users', UsersController::class);
+
+        Route::resource('orders', OrdersController::class);
+
+        Route::get('chat', [DashboardController::class, 'index'])->name(
+          'dashboard.chat'
+        );
+        Route::get('notifications', [
+          DashboardController::class,
+          'index',
+        ])->name('dashboard.notifications');
+      });
     });
 
-    Route::get('/dashboard/orders', [
-      DashboardController::class,
-      'index',
-    ])->name('dashboard.orders');
-
-    Route::get('/dashboard/chat', [DashboardController::class, 'index'])->name(
-      'dashboard.chat'
-    );
-
-    Route::get('/dashboard/notifications', [
-      DashboardController::class,
-      'index',
-    ])->name('dashboard.notifications');
-
     Route::middleware('can:access-admin-dashboard')->group(function () {
-      Route::get('/dashboard/users', [
-        DashboardController::class,
-        'index',
-      ])->name('dashboard.users');
+      Route::resource('vendors', VendorsController::class);
 
-      Route::get('/dashboard/marketing', [
-        DashboardController::class,
-        'index',
-      ])->name('dashboard.marketing');
+      Route::resource('marketing', MarketingController::class);
 
-      Route::get('/dashboard/discounts', [
-        DashboardController::class,
-        'index',
-      ])->name('dashboard.discounts');
+      Route::resource('analytics', AnalyticsController::class);
 
-      Route::get('/dashboard/vendors', [
-        DashboardController::class,
-        'index',
-      ])->name('dashboard.vendors');
+      Route::resource('discounts', DiscountsController::class);
     });
   });
 });

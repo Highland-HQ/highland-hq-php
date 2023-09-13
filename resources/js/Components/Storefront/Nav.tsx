@@ -52,7 +52,10 @@ export const Nav = () => {
       auth.abilities.includes('access-dashboard') &&
       !newDropdownItems.some(item => item.name === 'Dashboard')
     ) {
-      newDropdownItems.splice(1, 0, { name: 'Dashboard', path: 'dashboard' });
+      newDropdownItems.splice(1, 0, {
+        name: 'Dashboard',
+        path: 'dashboard.index',
+      });
     }
 
     setDropdownItems(newDropdownItems);

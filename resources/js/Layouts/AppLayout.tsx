@@ -44,8 +44,10 @@ export default function AppLayout({
 
         <SideNav />
 
-        {/* <!-- Page Content --> */}
-        <main>{children}</main>
+        <div className="max-w-7xl mx-auto mt-12">
+          {/* <!-- Page Content --> */}
+          <main>{children}</main>
+        </div>
       </div>
     </div>
   );

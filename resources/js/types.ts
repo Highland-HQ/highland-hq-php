@@ -4,6 +4,12 @@ type DateTime = string;
 
 export type Nullable<T> = T | null;
 
+export enum ProductStatus {
+  'Draft',
+  'Active',
+  'Archived',
+}
+
 export interface Team {
   id: number;
   name: string;
@@ -104,4 +110,22 @@ export interface DropdownItemType {
   color?: string;
   path?: string;
   onClick?: (e: React.FormEvent) => void;
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  model_info?: string;
+  sizing?: string;
+  sku?: string;
+  quantity: number;
+  price: number;
+  discount_price?: number;
+  cost_per_item?: number;
+  vendor_id?: number;
+  thumbnail_image_url: string;
+  status: ProductStatus;
+  created_at: DateTime;
+  updated_at: DateTime;
 }

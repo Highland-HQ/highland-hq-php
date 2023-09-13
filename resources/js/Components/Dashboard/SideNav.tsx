@@ -1,99 +1,115 @@
-import React from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { Listbox, ListboxItem, ListboxSection } from '@nextui-org/react';
 import {
-  Button,
-  Listbox,
-  ListboxItem,
-  ListboxSection,
-  Menu,
-} from '@nextui-org/react';
-import {
-  Home,
-  Users,
-  ShoppingBag,
-  PieChart,
-  MessageCircle,
-  Settings,
   Package2,
-  ListChecks,
   Group,
   User,
   Receipt,
-  ShoppingCart,
-  Building,
   BadgePercent,
   Store,
   AreaChart,
   LayoutDashboard,
 } from 'lucide-react';
+import useTypedPage from '@/Hooks/useTypedPage';
+import useRoute from '@/Hooks/useRoute';
+import { Link } from '@inertiajs/react';
 
-const employeeLinks = [
+interface SideNavLink {
+  name: string;
+  path: string;
+  icon: ReactNode;
+}
+
+const employeeLinks: SideNavLink[] = [
   {
     name: 'Dashboard',
-    route: 'dashboard.index',
+    path: 'dashboard.index',
     icon: <LayoutDashboard />,
   },
   {
     name: 'Products',
-    route: 'products.show',
+    path: 'products.index',
     icon: <Package2 />,
   },
   {
     name: 'Collections',
-    route: 'collections.show',
+    path: 'collections.index',
     icon: <Group />,
   },
   {
     name: 'Users',
-    route: 'users.show',
+    path: 'users.index',
     icon: <User />,
   },
   {
     name: 'Orders',
-    route: 'orders.show',
+    path: 'orders.index',
     icon: <Receipt />,
-  },
-  {
-    name: 'Carts',
-    route: 'carts.show',
-    icon: <ShoppingCart />,
   },
 ];
 
-const adminLinks = [
+const adminLinks: SideNavLink[] = [
   {
     name: 'Vendors',
-    route: 'vendors.show',
+    path: 'vendors.index',
     icon: <Store />,
   },
   {
+    name: 'Marketing',
+    path: 'marketing.index',
+    icon: <AreaChart />,
+  },
+  {
     name: 'Analytics',
-    route: 'analytics.show',
+    path: 'analytics.index',
     icon: <AreaChart />,
   },
   {
     name: 'Discounts',
-    route: 'discounts.show',
+    path: 'discounts.index',
     icon: <BadgePercent />,
   },
 ];
 
-export const SideNav = () => (
-  <div className="h-screen w-60 fixed bg-background px-4 border-r border-r-divider">
-    <Listbox color="secondary" variant="shadow">
-      <ListboxSection title="General" showDivider>
-        {employeeLinks.map(({ name, route, icon }) => (
-          <ListboxItem key={name.toLowerCase()} startContent={icon}>
-            {name}
-          </ListboxItem>
-        ))}
-      </ListboxSection>
-      <ListboxSection title="Administrator" showDivider>
-        {adminLinks.map(({ name, route, icon }) => (
-          <ListboxItem key={name.toLowerCase()} startContent={icon}>
-            {name}
-          </ListboxItem>
-        ))}
-      </ListboxSection>
-    </Listbox>
-  </div>
-);
+export const SideNav = () => {
+  const page = useTypedPage();
+  const route = useRoute();
+
+  const [navSections, setNavSections] = useState<JSX.Element[]>([]);
+
+  const generateListboxItems = (links: SideNavLink[]) => {
+    return links.map(({ name, path, icon }: SideNavLink) => (
+      <ListboxItem key={name.toLowerCase()} startContent={icon}>
+        <Link className="w-full" href={route(path ? path : '/')}>
+          <div className="w-full">{name}</div>
+        </Link>
+      </ListboxItem>
+    ));
+  };
+
+  useEffect(() => {
+    const newNavSections: JSX.Element[] = [
+      <ListboxSection title="General" showDivider key="general-section">
+        {generateListboxItems(employeeLinks)}
+      </ListboxSection>,
+    ];
+
+    if (page.props.auth.abilities.includes('access-admin-dashboard')) {
+      newNavSections.push(
+        <ListboxSection title="Administrator" showDivider key="admin-section">
+          {generateListboxItems(adminLinks)}
+        </ListboxSection>,
+      );
+    }
+
+    setNavSections(newNavSections);
+  }, [page.props.auth.abilities]);
+
+  return (
+    <div className="h-screen w-60 fixed bg-background px-4 border-r border-r-divider">
+      <Listbox color="secondary" variant="shadow">
+        {navSections}
+      </Listbox>
+    </div>
+  );
+};
