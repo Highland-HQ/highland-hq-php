@@ -27,8 +27,6 @@ COPY --from=composer /app/vendor /var/www/html/vendor
 COPY artisan /var/www/html/artisan
 COPY . /var/www/html
 
-RUN php artisan migrate --force
-
 RUN php artisan config:cache
 
 RUN php artisan event:cache
