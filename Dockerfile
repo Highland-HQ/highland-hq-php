@@ -27,10 +27,19 @@ COPY --from=composer /app/vendor /var/www/html/vendor
 COPY artisan /var/www/html/artisan
 COPY . /var/www/html
 
+RUN php artisan migrate
+
+RUN php artisan config:cache
+
+RUN php artisan event:cache
+
+RUN php artisan route:cache
+
+RUN php artisan view:cache
+
 # Change ownership for storage and cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose port 9000 and start php-fpm server
 EXPOSE 9000
 
 CMD ["php-fpm"]
