@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  laravel:
+    build:
+      context: ./
+    networks:
+      - webapp
+      - database
+    depends_on:
+      - db
+    env_file:
+      - .env.production
+    restart: always
+    container_name: highland-hq
+
+  proxy:
+    build:
+      context: ./nginx
+    networks:
+      - webapp
+    ports:
+      - '42069:80'
+    depends_on:
+      - laravel
+    restart: always
+    container_name: highland-proxy
+
+  db:
+    image: postgres:13
+    restart: always
+    networks:
+      - database
+    env_file:
+      - .env.production
+    container_name: highland-db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+networks:
+  webapp:
+    driver: bridge
+  database:
+    driver: bridge
+
+volumes:
+  postgres-data:
