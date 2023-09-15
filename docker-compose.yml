@@ -28,7 +28,7 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt
 
   db:
-    image: postgres:latest
+    image: postgres:13
     restart: always
     networks:
       - database
