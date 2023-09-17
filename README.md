@@ -6,8 +6,8 @@
 This repository houses the ecommerce platform for Highland-HQ, a western clothing brand. The platform is a complete solution that includes an admin dashboard for site management and a user storefront for customer transactions.
 
 ## Features
-Admin Dashboard: A backend interface for managing products, orders, and other site content.
-Storefront: A customer-facing interface for product browsing and purchasing.
+- Admin Dashboard: A backend interface for managing products, orders, and other site content.
+- Storefront: A customer-facing interface for product browsing and purchasing.
 
 ## 🚀 Up and Running
 Clone the Repo:
