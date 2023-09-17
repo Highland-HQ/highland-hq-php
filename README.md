@@ -55,7 +55,7 @@ I think that's all, now you can start contributing 😎
 - [Laravel Docs](https://laravel.com/docs/10.x/readme)
 - [React Docs](https://react.dev/)
 - [Jetstream Docs](https://jetstream.laravel.com/introduction.html)
-- [Inertia Docs](https://inertiajs.com/)com/introduction.html)
+- [Inertia Docs](https://inertiajs.com/)
 - [Tailwind Docs](https://tailwindcss.com/docs/installation)
 - [NextUI Docs](https://nextui.org/docs/guide/introduction)
 
