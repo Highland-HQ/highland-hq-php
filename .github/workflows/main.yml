@@ -14,10 +14,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Envoy
-        run: |
-          sudo apt-get update
-          sudo apt-get install envoy
-
       - name: Deploy with Envoy
         run: envoy run deploy
