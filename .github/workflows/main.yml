@@ -1,6 +1,7 @@
 name: Deploy with Envoy
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - trunk
