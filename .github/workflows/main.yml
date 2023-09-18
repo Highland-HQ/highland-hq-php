@@ -1,0 +1,22 @@
+name: Deploy with Envoy
+
+on:
+  push:
+    branches:
+      - trunk
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Envoy
+        run: |
+          sudo apt-get update
+          sudo apt-get install envoy
+
+      - name: Deploy with Envoy
+        run: envoy run deploy
