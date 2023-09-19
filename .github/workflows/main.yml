@@ -26,12 +26,14 @@ jobs:
 
       - name: Setup SSH Keys
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan 107.172.79.23 >> ~/.ssh/known_hosts
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_rsa
 
       - name: Deploy via Envoy
         run: ~/.composer/vendor/bin/envoy run deploy
