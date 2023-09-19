@@ -33,5 +33,8 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan 107.172.79.23 >> ~/.ssh/known_hosts
 
+      - name: Test SSH connection
+        run: ssh -v root@107.172.79.23 -i ~/.ssh/id_rsa
+
       - name: Deploy via Envoy
         run: ~/.composer/vendor/bin/envoy run deploy
