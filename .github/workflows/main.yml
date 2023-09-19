@@ -1,6 +1,7 @@
 name: Deploy via Envoy
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - trunk
@@ -34,6 +35,9 @@ jobs:
           ssh-keyscan 107.172.79.23 >> ~/.ssh/known_hosts
           eval $(ssh-agent -s)
           ssh-add ~/.ssh/id_rsa
+
+      - name: Test SSH connection
+        run: ssh -v root@107.172.79.23 -i ~/.ssh/id_rsa
 
       - name: Deploy via Envoy
         run: ~/.composer/vendor/bin/envoy run deploy
