@@ -40,6 +40,9 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
 
+      - name: Add SSH Host Key
+        run: ssh-keyscan -H 107.172.79.23 >> ~/.ssh/known_hosts
+
       - name: Run Envoy
         run: |
           composer global require laravel/envoy
