@@ -1,7 +1,6 @@
-name: Deploy with Envoy
+name: Deploy via Envoy
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - trunk
@@ -14,5 +13,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Deploy with Envoy
-        run: envoy run deploy
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Install Composer dependencies
+        run: composer install
+
+      - name: Install Laravel Envoy
+        run: composer global require laravel/envoy
+
+      - name: Setup SSH Keys
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan 107.172.79.23 >> ~/.ssh/known_hosts
+
+      - name: Deploy via Envoy
+        run: ~/.composer/vendor/bin/envoy run deploy

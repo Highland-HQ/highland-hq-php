@@ -38,11 +38,6 @@
     npm run build
 @endtask
 
-@task('generate_app_key')
-    cd /var/www/highland-hq
-    php artisan key:generate
-@endtask
-
 @task('optimize_laravel')
     cd /var/www/highland-hq
     php artisan config:cache
@@ -50,10 +45,6 @@
     php artisan event:cache
     php artisan route:cache
     php artisan view:cache
-@endtask
-
-@task('symlink')
-    ln -nfs /var/www/highland-hq/public /var/www/highland-hq/current
 @endtask
 
 @task('reload_php')
