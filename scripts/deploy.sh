@@ -2,7 +2,7 @@
 
 cd /var/www/highland-hq || exit
 
-git pull origin main
+git pull origin trunk
 
 composer install --optimize-autoloader --no-dev
 
