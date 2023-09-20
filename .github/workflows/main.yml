@@ -1,4 +1,4 @@
-name: Deploy Via Envoy
+name: Deployment
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
           ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
 
       - name: Add SSH Host Key
-        run: ssh-keyscan -H {{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+        run: ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       - name: Run Envoy
         run: |
@@ -28,4 +28,4 @@ jobs:
           ~/.composer/vendor/bin/envoy run deploy
 
       - name: Run Deployment Script on Server
-        run: ssh -o StrictHostKeyChecking=no {{ secrets.SERVER_USERNAME }}@{{ secrets.SERVER_IP }} '/path/to/your/laravel/app/deploy.sh'
+        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} '${{ secrets.APP_PATH }}/deploy.sh'
