@@ -3,10 +3,7 @@ import classNames from 'classnames';
 import React from 'react';
 import useRoute from '@/Hooks/useRoute';
 import AuthenticationCard from '@/Components/AuthenticationCard';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import { Input, Button } from '@nextui-org/react';
 
 export default function ConfirmPassword() {
   const route = useRoute();
@@ -32,27 +29,29 @@ export default function ConfirmPassword() {
 
       <form onSubmit={onSubmit}>
         <div>
-          <InputLabel htmlFor="password">Password</InputLabel>
-          <TextInput
+          <Input
             id="password"
+            label="Password"
             type="password"
             className="mt-1 block w-full"
             value={form.data.password}
             onChange={e => form.setData('password', e.currentTarget.value)}
-            required
-            autoComplete="current-password"
             autoFocus
+            validationState={form.errors.password ? 'invalid' : 'valid'}
+            errorMessage={form.errors.password}
           />
-          <InputError className="mt-2" message={form.errors.password} />
         </div>
 
         <div className="flex justify-end mt-4">
-          <PrimaryButton
-            className={classNames('ml-4', { 'opacity-25': form.processing })}
+          <Button
+            type="submit"
+            variant="solid"
+            color="primary"
             disabled={form.processing}
+            className={classNames('ml-4', { 'opacity-25': form.processing })}
           >
             Confirm
-          </PrimaryButton>
+          </Button>
         </div>
       </form>
     </AuthenticationCard>

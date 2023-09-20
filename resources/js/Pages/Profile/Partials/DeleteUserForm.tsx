@@ -3,11 +3,8 @@ import classNames from 'classnames';
 import React, { useRef, useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import ActionSection from '@/Components/ActionSection';
-import DangerButton from '@/Components/DangerButton';
 import DialogModal from '@/Components/DialogModal';
-import TextInput from '@/Components/TextInput';
-import InputError from '@/Components/InputError';
-import SecondaryButton from '@/Components/SecondaryButton';
+import { Button, Input } from '@nextui-org/react';
 
 export default function DeleteUserForm() {
   const route = useRoute();
@@ -49,9 +46,9 @@ export default function DeleteUserForm() {
       </div>
 
       <div className="mt-5">
-        <DangerButton onClick={confirmUserDeletion}>
+        <Button onClick={confirmUserDeletion} color="danger">
           Delete Account
-        </DangerButton>
+        </Button>
       </div>
 
       {/* <!-- Delete Account Confirmation Modal --> */}
@@ -62,27 +59,28 @@ export default function DeleteUserForm() {
           Please enter your password to confirm you would like to permanently
           delete your account.
           <div className="mt-4">
-            <TextInput
+            <Input
               type="password"
               className="mt-1 block w-3/4"
-              placeholder="Password"
+              label="Password"
               value={form.data.password}
               onChange={e => form.setData('password', e.currentTarget.value)}
+              validationState={form.errors.password ? 'invalid' : 'valid'}
+              errorMessage={form.errors.password}
             />
-
-            <InputError message={form.errors.password} className="mt-2" />
           </div>
         </DialogModal.Content>
         <DialogModal.Footer>
-          <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
-
-          <DangerButton
+          <Button onClick={closeModal} color="default">
+            Cancel
+          </Button>
+          <Button
             onClick={deleteUser}
+            color="danger"
             className={classNames('ml-2', { 'opacity-25': form.processing })}
-            disabled={form.processing}
           >
             Delete Account
-          </DangerButton>
+          </Button>
         </DialogModal.Footer>
       </DialogModal>
     </ActionSection>

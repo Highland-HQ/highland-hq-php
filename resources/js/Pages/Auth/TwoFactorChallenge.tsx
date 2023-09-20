@@ -3,10 +3,7 @@ import classNames from 'classnames';
 import React, { useRef, useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import AuthenticationCard from '@/Components/AuthenticationCard';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import InputError from '@/Components/InputError';
+import { Button, Input } from '@nextui-org/react';
 
 export default function TwoFactorChallenge() {
   const route = useRoute();
@@ -52,9 +49,9 @@ export default function TwoFactorChallenge() {
       <form onSubmit={onSubmit}>
         {recovery ? (
           <div>
-            <InputLabel htmlFor="recovery_code">Recovery Code</InputLabel>
-            <TextInput
+            <Input
               id="recovery_code"
+              label="Recovery Code"
               type="text"
               className="mt-1 block w-full"
               value={form.data.recovery_code}
@@ -62,16 +59,17 @@ export default function TwoFactorChallenge() {
                 form.setData('recovery_code', e.currentTarget.value)
               }
               ref={recoveryCodeRef}
+              validationState={form.errors.recovery_code ? 'invalid' : 'valid'}
+              errorMessage={form.errors.recovery_code}
               autoComplete="one-time-code"
             />
-            <InputError className="mt-2" message={form.errors.recovery_code} />
           </div>
         ) : (
           <div>
-            <InputLabel htmlFor="code">Code</InputLabel>
-            <TextInput
+            <Input
               id="code"
               type="text"
+              label="Code"
               inputMode="numeric"
               className="mt-1 block w-full"
               value={form.data.code}
@@ -79,8 +77,9 @@ export default function TwoFactorChallenge() {
               autoFocus
               autoComplete="one-time-code"
               ref={codeRef}
+              validationState={form.errors.code ? 'invalid' : 'valid'}
+              errorMessage={form.errors.code}
             />
-            <InputError className="mt-2" message={form.errors.code} />
           </div>
         )}
 
@@ -93,12 +92,15 @@ export default function TwoFactorChallenge() {
             {recovery ? 'Use an authentication code' : 'Use a recovery code'}
           </button>
 
-          <PrimaryButton
-            className={classNames('ml-4', { 'opacity-25': form.processing })}
+          <Button
+            type="submit"
+            variant="solid"
+            color="primary"
             disabled={form.processing}
+            className={classNames('ml-4', { 'opacity-25': form.processing })}
           >
             Log in
-          </PrimaryButton>
+          </Button>
         </div>
       </form>
     </AuthenticationCard>

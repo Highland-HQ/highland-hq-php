@@ -5,11 +5,9 @@ import useRoute from '@/Hooks/useRoute';
 import ActionMessage from '@/Components/ActionMessage';
 import ActionSection from '@/Components/ActionSection';
 import DialogModal from '@/Components/DialogModal';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import SecondaryButton from '@/Components/SecondaryButton';
 import { Session } from '@/types';
+import { Input, Button } from '@nextui-org/react';
+import { color } from 'framer-motion';
 
 interface Props {
   sessions: Session[];
@@ -118,9 +116,9 @@ export default function LogoutOtherBrowserSessions({ sessions }: Props) {
       ) : null}
 
       <div className="flex items-center mt-5">
-        <PrimaryButton onClick={confirmLogout}>
+        <Button onClick={confirmLogout} color="primary">
           Log Out Other Browser Sessions
-        </PrimaryButton>
+        </Button>
 
         <ActionMessage on={form.recentlySuccessful} className="ml-3">
           Done.
@@ -133,29 +131,32 @@ export default function LogoutOtherBrowserSessions({ sessions }: Props) {
           Please enter your password to confirm you would like to log out of
           your other browser sessions across all of your devices.
           <div className="mt-4">
-            <TextInput
+            <Input
               type="password"
               className="mt-1 block w-3/4"
-              placeholder="Password"
+              label="Password"
               ref={passwordRef}
               value={form.data.password}
               onChange={e => form.setData('password', e.currentTarget.value)}
+              validationState={form.errors.password ? 'invalid' : 'valid'}
+              errorMessage={form.errors.password}
             />
-
-            <InputError message={form.errors.password} className="mt-2" />
           </div>
         </DialogModal.Content>
 
         <DialogModal.Footer>
-          <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+          <Button onClick={closeModal} color="default">
+            Cancel
+          </Button>
 
-          <PrimaryButton
+          <Button
             onClick={logoutOtherBrowserSessions}
             className={classNames('ml-2', { 'opacity-25': form.processing })}
             disabled={form.processing}
+            color="primary"
           >
-            Log Out Other Browser Sessions
-          </PrimaryButton>
+            Log Out Of Other Browser Sessions
+          </Button>
         </DialogModal.Footer>
       </DialogModal>
     </ActionSection>

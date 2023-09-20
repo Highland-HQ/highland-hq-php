@@ -5,13 +5,9 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import ActionSection from '@/Components/ActionSection';
 import ConfirmsPassword from '@/Components/ConfirmsPassword';
-import DangerButton from '@/Components/DangerButton';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import SecondaryButton from '@/Components/SecondaryButton';
-import TextInput from '@/Components/TextInput';
 import useTypedPage from '@/Hooks/useTypedPage';
+import { Input, Button, Card } from '@nextui-org/react';
+import PrimaryButton from '@/Components/PrimaryButton';
 
 interface Props {
   requiresConfirmation: boolean;
@@ -181,12 +177,11 @@ export default function TwoFactorAuthenticationForm({
 
               {confirming && (
                 <div className="mt-4">
-                  <InputLabel htmlFor="code" value="Code" />
-
-                  <TextInput
+                  <Input
                     id="code"
                     type="text"
                     name="code"
+                    label="Code"
                     className="block mt-1 w-1/2"
                     inputMode="numeric"
                     autoFocus={true}
@@ -195,11 +190,10 @@ export default function TwoFactorAuthenticationForm({
                     onChange={e =>
                       confirmationForm.setData('code', e.currentTarget.value)
                     }
-                  />
-
-                  <InputError
-                    message={confirmationForm.errors.code}
-                    className="mt-2"
+                    validationState={
+                      confirmationForm.errors.code ? 'invalid' : 'valid'
+                    }
+                    errorMessage={confirmationForm.errors.code}
                   />
                 </div>
               )}
@@ -231,59 +225,87 @@ export default function TwoFactorAuthenticationForm({
           <div>
             {confirming ? (
               <ConfirmsPassword onConfirm={confirmTwoFactorAuthentication}>
-                <PrimaryButton
+                <Button
+                  onClick={confirmTwoFactorAuthentication}
+                  type="button"
                   className={classNames('mr-3', { 'opacity-25': enabling })}
                   disabled={enabling}
+                  color="primary"
                 >
                   Confirm
-                </PrimaryButton>
+                </Button>
               </ConfirmsPassword>
             ) : null}
             {recoveryCodes.length > 0 && !confirming ? (
               <ConfirmsPassword onConfirm={regenerateRecoveryCodes}>
-                <SecondaryButton className="mr-3">
+                <Button
+                  className="mr-3"
+                  type="button"
+                  onClick={regenerateRecoveryCodes}
+                  color="default"
+                >
                   Regenerate Recovery Codes
-                </SecondaryButton>
+                </Button>
               </ConfirmsPassword>
             ) : null}
             {recoveryCodes.length === 0 && !confirming ? (
               <ConfirmsPassword onConfirm={showRecoveryCodes}>
-                <SecondaryButton className="mr-3">
+                <Button
+                  className="mr-3"
+                  type="button"
+                  onClick={showRecoveryCodes}
+                  color="default"
+                >
                   Show Recovery Codes
-                </SecondaryButton>
+                </Button>
               </ConfirmsPassword>
             ) : null}
 
             {confirming ? (
               <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                <SecondaryButton
+                <Button
+                  onClick={disableTwoFactorAuthentication}
+                  type="button"
                   className={classNames('mr-3', { 'opacity-25': disabling })}
                   disabled={disabling}
+                  color="default"
                 >
                   Cancel
-                </SecondaryButton>
+                </Button>
               </ConfirmsPassword>
             ) : (
               <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                <DangerButton
-                  className={classNames({ 'opacity-25': disabling })}
+                <Button
+                  onClick={disableTwoFactorAuthentication}
+                  type="button"
+                  className={classNames('mr-3', { 'opacity-25': disabling })}
                   disabled={disabling}
+                  color="danger"
                 >
                   Disable
-                </DangerButton>
+                </Button>
               </ConfirmsPassword>
             )}
           </div>
         ) : (
           <div>
             <ConfirmsPassword onConfirm={enableTwoFactorAuthentication}>
-              <PrimaryButton
+              <Button
+                onClick={enableTwoFactorAuthentication}
                 type="button"
-                className={classNames({ 'opacity-25': enabling })}
+                className={classNames('mr-3', { 'opacity-25': enabling })}
+                disabled={enabling}
+                color="primary"
+              >
+                Enable
+              </Button>
+              {/* <PrimaryButton
+                type="button"
+                className={classNames('mr-3', { 'opacity-25': enabling })}
                 disabled={enabling}
               >
                 Enable
-              </PrimaryButton>
+              </PrimaryButton> */}
             </ConfirmsPassword>
           </div>
         )}

@@ -7,6 +7,7 @@ import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import SecondaryButton from '@/Components/SecondaryButton';
+import { Input, Button } from '@nextui-org/react';
 
 interface Props {
   title?: string;
@@ -78,7 +79,7 @@ export default function ConfirmsPassword({
           {content}
 
           <div className="mt-4">
-            <TextInput
+            {/* <TextInput
               ref={passwordRef}
               type="password"
               className="mt-1 block w-3/4"
@@ -89,20 +90,42 @@ export default function ConfirmsPassword({
               }
             />
 
-            <InputError message={form.error} className="mt-2" />
+            <InputError message={form.error} className="mt-2" /> */}
+            <Input
+              type="password"
+              ref={passwordRef}
+              className="mt-1 block w-3/4"
+              label="Password"
+              value={form.password}
+              onChange={e =>
+                setForm({ ...form, password: e.currentTarget.value })
+              }
+              errorMessage={form.error}
+            />
           </div>
         </DialogModal.Content>
 
         <DialogModal.Footer>
-          <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+          {/* <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton> */}
+          <Button onClick={closeModal} color="default">
+            Cancel
+          </Button>
 
-          <PrimaryButton
+          {/* <PrimaryButton
             className={classNames('ml-2', { 'opacity-25': form.processing })}
             onClick={confirmPassword}
             disabled={form.processing}
           >
             {button}
-          </PrimaryButton>
+          </PrimaryButton> */}
+          <Button
+            className={classNames('ml-2', { 'opacity-25': form.processing })}
+            onClick={confirmPassword}
+            disabled={form.processing}
+            color="primary"
+          >
+            {button}
+          </Button>
         </DialogModal.Footer>
       </DialogModal>
     </span>

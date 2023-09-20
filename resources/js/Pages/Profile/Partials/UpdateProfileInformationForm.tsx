@@ -7,11 +7,9 @@ import ActionMessage from '@/Components/ActionMessage';
 import FormSection from '@/Components/FormSection';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import SecondaryButton from '@/Components/SecondaryButton';
 import { User } from '@/types';
 import useTypedPage from '@/Hooks/useTypedPage';
+import { Input, Button } from '@nextui-org/react';
 
 interface Props {
   user: User;
@@ -88,12 +86,14 @@ export default function UpdateProfileInformationForm({ user }: Props) {
             Saved.
           </ActionMessage>
 
-          <PrimaryButton
+          <Button
             className={classNames({ 'opacity-25': form.processing })}
             disabled={form.processing}
+            type="submit"
+            color="primary"
           >
             Save
-          </PrimaryButton>
+          </Button>
         </>
       )}
     >
@@ -134,22 +134,26 @@ export default function UpdateProfileInformationForm({ user }: Props) {
             </div>
           )}
 
-          <SecondaryButton
-            className="mt-2 mr-2"
+          <Button
             type="button"
+            variant="solid"
+            color="default"
             onClick={selectNewPhoto}
+            className="mt-2 mr-2"
           >
             Select A New Photo
-          </SecondaryButton>
+          </Button>
 
           {user.profile_photo_path ? (
-            <SecondaryButton
+            <Button
               type="button"
-              className="mt-2"
+              variant="solid"
+              color="default"
               onClick={deletePhoto}
+              className="mt-2"
             >
               Remove Photo
-            </SecondaryButton>
+            </Button>
           ) : null}
 
           <InputError message={form.errors.photo} className="mt-2" />
@@ -158,29 +162,30 @@ export default function UpdateProfileInformationForm({ user }: Props) {
 
       {/* <!-- Name --> */}
       <div className="col-span-6 sm:col-span-4">
-        <InputLabel htmlFor="name" value="Name" />
-        <TextInput
-          id="name"
-          type="text"
-          className="mt-1 block w-full"
+        <Input
+          type="name"
+          variant="bordered"
+          label="Name"
+          size="md"
           value={form.data.name}
           onChange={e => form.setData('name', e.currentTarget.value)}
-          autoComplete="name"
+          validationState={form.errors.name ? 'invalid' : 'valid'}
+          errorMessage={form.errors.name}
         />
-        <InputError message={form.errors.name} className="mt-2" />
       </div>
 
       {/* <!-- Email --> */}
       <div className="col-span-6 sm:col-span-4">
-        <InputLabel htmlFor="email" value="Email" />
-        <TextInput
-          id="email"
+        <Input
           type="email"
-          className="mt-1 block w-full"
+          variant="bordered"
+          label="Email"
+          size="lg"
           value={form.data.email}
           onChange={e => form.setData('email', e.currentTarget.value)}
+          validationState={form.errors.email ? 'invalid' : 'valid'}
+          errorMessage={form.errors.email}
         />
-        <InputError message={form.errors.email} className="mt-2" />
 
         {page.props.jetstream.hasEmailVerification &&
         user.email_verified_at === null ? (
@@ -189,7 +194,7 @@ export default function UpdateProfileInformationForm({ user }: Props) {
               Your email address is unverified.
               <Link
                 href={route('verification.send')}
-                method="post"
+                type="submit"
                 as="button"
                 className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                 onClick={e => {
