@@ -19,4 +19,14 @@ export default defineConfig({
   ssr: {
     noExternal: ['@inertiajs/server'],
   },
+  build: {
+    rollupOptions: {
+      onwarn: (warning, warn) => {
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+          return;
+        }
+        warn(warning);
+      },
+    },
+  },
 });

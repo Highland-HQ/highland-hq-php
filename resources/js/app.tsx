@@ -2,7 +2,7 @@ import './bootstrap';
 import '../css/app.css';
 
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { hydrateRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { RouteContext } from '@/Hooks/useRoute';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -21,8 +21,8 @@ createInertiaApp({
       import.meta.glob('./Pages/**/*.tsx'),
     ),
   setup({ el, App, props }) {
-    const root = createRoot(el);
-    return root.render(
+    hydrateRoot(
+      el,
       <RouteContext.Provider value={(window as any).route}>
         <NextUIProvider>
           <App {...props} />

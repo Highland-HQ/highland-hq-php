@@ -26,7 +26,7 @@ import {
   EyeIcon,
   Search,
 } from 'lucide-react';
-import { capitalize } from 'lodash';
+import { capitalize } from '@/utils';
 
 interface ProductIndexProps {
   products: Partial<Product>[];
@@ -95,6 +95,7 @@ const Index = ({ products }: ProductIndexProps) => {
         <div className="flex justify-between gap-3 items-end">
           <Input
             isClearable
+            variant="bordered"
             className="w-full"
             placeholder="Search by name..."
             startContent={<Search />}
@@ -107,13 +108,14 @@ const Index = ({ products }: ProductIndexProps) => {
               <DropdownTrigger>
                 <Button
                   endContent={<ChevronDown className="text-small" />}
-                  variant="flat"
+                  variant="bordered"
                 >
                   Status
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
                 disallowEmptySelection
+                variant="flat"
                 closeOnSelect={false}
                 selectedKeys={statusFilter}
                 selectionMode="multiple"
@@ -130,13 +132,14 @@ const Index = ({ products }: ProductIndexProps) => {
               <DropdownTrigger className="hidden sm:flex">
                 <Button
                   endContent={<ChevronDown className="text-small" />}
-                  variant="flat"
+                  variant="bordered"
                 >
                   Columns
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
                 disallowEmptySelection
+                variant="flat"
                 aria-label="Table Columns"
                 closeOnSelect={false}
                 selectedKeys={visibleColumns}
@@ -144,7 +147,7 @@ const Index = ({ products }: ProductIndexProps) => {
                 onSelectionChange={handleVisibleColumnsChange}
               >
                 {columns.map(column => (
-                  <DropdownItem key={column.uid} className="capitalize">
+                  <DropdownItem key={column.uid}>
                     {capitalize(column.name)}
                   </DropdownItem>
                 ))}

@@ -23,4 +23,4 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       - name: Run Deployment Script on Server
-        run: ssh -vvv -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} '${{ secrets.APP_PATH }}/deploy.sh'
+        run: ssh -vvv -o ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} '${{ secrets.APP_PATH }}/deploy.sh'
