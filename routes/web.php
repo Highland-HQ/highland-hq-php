@@ -20,9 +20,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-  return Inertia::render('Storefront/Index', [
-    'assets' => [asset('images/logos/highland-logo-black.png')],
-  ]);
+  return Inertia::render('Storefront/Index');
 })->name('storefront.index');
 
 Route::get('/shop/womens', [StorefrontController::class, 'index'])->name(

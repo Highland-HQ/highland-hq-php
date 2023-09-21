@@ -5,13 +5,9 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import ActionSection from '@/Components/ActionSection';
 import ConfirmsPassword from '@/Components/ConfirmsPassword';
-import DangerButton from '@/Components/DangerButton';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import SecondaryButton from '@/Components/SecondaryButton';
-import TextInput from '@/Components/TextInput';
 import useTypedPage from '@/Hooks/useTypedPage';
+import { Input, Button, Card, Divider } from '@nextui-org/react';
+import useRoute from '@/Hooks/useRoute';
 
 interface Props {
   requiresConfirmation: boolean;
@@ -134,7 +130,7 @@ export default function TwoFactorAuthenticationForm({
         );
       })()}
 
-      <div className="mt-3 max-w-xl text-sm text-gray-600 dark:text-gray-400">
+      <div className="mt-3 text-sm text-gray-600 dark:text-gray-400">
         <p>
           When two factor authentication is enabled, you will be prompted for a
           secure, random token during authentication. You may retrieve this
@@ -146,7 +142,7 @@ export default function TwoFactorAuthenticationForm({
         <div>
           {qrCode ? (
             <div>
-              <div className="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
+              <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
                 {confirming ? (
                   <p className="font-semibold">
                     To finish enabling two factor authentication, scan the
@@ -181,13 +177,13 @@ export default function TwoFactorAuthenticationForm({
 
               {confirming && (
                 <div className="mt-4">
-                  <InputLabel htmlFor="code" value="Code" />
-
-                  <TextInput
+                  <Divider className="my-4" />
+                  <Input
+                    variant="bordered"
                     id="code"
                     type="text"
                     name="code"
-                    className="block mt-1 w-1/2"
+                    label="Code"
                     inputMode="numeric"
                     autoFocus={true}
                     autoComplete="one-time-code"
@@ -195,11 +191,10 @@ export default function TwoFactorAuthenticationForm({
                     onChange={e =>
                       confirmationForm.setData('code', e.currentTarget.value)
                     }
-                  />
-
-                  <InputError
-                    message={confirmationForm.errors.code}
-                    className="mt-2"
+                    validationState={
+                      confirmationForm.errors.code ? 'invalid' : 'valid'
+                    }
+                    errorMessage={confirmationForm.errors.code}
                   />
                 </div>
               )}
@@ -231,59 +226,77 @@ export default function TwoFactorAuthenticationForm({
           <div>
             {confirming ? (
               <ConfirmsPassword onConfirm={confirmTwoFactorAuthentication}>
-                <PrimaryButton
+                <Button
+                  onClick={confirmTwoFactorAuthentication}
+                  type="button"
                   className={classNames('mr-3', { 'opacity-25': enabling })}
                   disabled={enabling}
+                  color="primary"
                 >
                   Confirm
-                </PrimaryButton>
+                </Button>
               </ConfirmsPassword>
             ) : null}
             {recoveryCodes.length > 0 && !confirming ? (
               <ConfirmsPassword onConfirm={regenerateRecoveryCodes}>
-                <SecondaryButton className="mr-3">
+                <Button
+                  className="mr-3"
+                  type="button"
+                  onClick={regenerateRecoveryCodes}
+                  color="default"
+                >
                   Regenerate Recovery Codes
-                </SecondaryButton>
+                </Button>
               </ConfirmsPassword>
             ) : null}
             {recoveryCodes.length === 0 && !confirming ? (
               <ConfirmsPassword onConfirm={showRecoveryCodes}>
-                <SecondaryButton className="mr-3">
+                <Button
+                  className="mr-3"
+                  type="button"
+                  onClick={showRecoveryCodes}
+                  color="default"
+                >
                   Show Recovery Codes
-                </SecondaryButton>
+                </Button>
               </ConfirmsPassword>
             ) : null}
 
             {confirming ? (
               <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                <SecondaryButton
+                <Button
+                  onClick={disableTwoFactorAuthentication}
+                  type="button"
                   className={classNames('mr-3', { 'opacity-25': disabling })}
                   disabled={disabling}
+                  color="default"
                 >
                   Cancel
-                </SecondaryButton>
+                </Button>
               </ConfirmsPassword>
             ) : (
               <ConfirmsPassword onConfirm={disableTwoFactorAuthentication}>
-                <DangerButton
-                  className={classNames({ 'opacity-25': disabling })}
+                <Button
+                  onClick={disableTwoFactorAuthentication}
+                  type="button"
                   disabled={disabling}
+                  color="danger"
                 >
                   Disable
-                </DangerButton>
+                </Button>
               </ConfirmsPassword>
             )}
           </div>
         ) : (
           <div>
             <ConfirmsPassword onConfirm={enableTwoFactorAuthentication}>
-              <PrimaryButton
+              <button
                 type="button"
-                className={classNames({ 'opacity-25': enabling })}
                 disabled={enabling}
+                className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-unit-4 min-w-unit-20 h-unit-10 text-small gap-unit-2 rounded-medium [&>svg]:max-w-[theme(spacing.unit-8)] data-[pressed=true]:scale-[0.97] transition-transform-colors motion-reduce:transition-none bg-primary text-primary-foreground"
               >
                 Enable
-              </PrimaryButton>
+              </button>
             </ConfirmsPassword>
           </div>
         )}

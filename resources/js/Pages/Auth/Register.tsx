@@ -1,14 +1,9 @@
 import { Link, useForm, Head } from '@inertiajs/react';
-import classNames from 'classnames';
 import React, { useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import useTypedPage from '@/Hooks/useTypedPage';
 import AuthenticationCard from '@/Components/AuthenticationCard';
-import Checkbox from '@/Components/Checkbox';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import InputError from '@/Components/InputError';
-import { Button, Input, Link as NextLink } from '@nextui-org/react';
+import { Button, Input, Link as NextLink, Checkbox } from '@nextui-org/react';
 import { Eye, EyeOff } from 'lucide-react';
 
 export default function Register() {
@@ -113,9 +108,9 @@ export default function Register() {
                   isIconOnly
                   color="default"
                   variant="light"
-                  onClick={() => setPasswordVisible(!passwordVisible)}
+                  onClick={() => setConfPasswordVisible(!confPasswordVisible)}
                 >
-                  {passwordVisible ? <Eye /> : <EyeOff />}
+                  {confPasswordVisible ? <Eye /> : <EyeOff />}
                 </Button>
               }
             />
@@ -123,7 +118,10 @@ export default function Register() {
 
           {page.props.jetstream.hasTermsAndPrivacyPolicyFeature && (
             <div className="mt-4">
-              <InputLabel htmlFor="terms">
+              <Input
+                validationState={form.errors.terms ? 'invalid' : 'valid'}
+                errorMessage={form.errors.terms}
+              >
                 <div className="flex items-center">
                   <Checkbox
                     name="terms"
@@ -154,8 +152,7 @@ export default function Register() {
                     </a>
                   </div>
                 </div>
-                <InputError className="mt-2" message={form.errors.terms} />
-              </InputLabel>
+              </Input>
             </div>
           )}
 
