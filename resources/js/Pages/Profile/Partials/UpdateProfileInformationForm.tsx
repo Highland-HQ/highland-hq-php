@@ -5,8 +5,6 @@ import React, { useRef, useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import ActionMessage from '@/Components/ActionMessage';
 import FormSection from '@/Components/FormSection';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
 import { User } from '@/types';
 import useTypedPage from '@/Hooks/useTypedPage';
 import { Input, Button } from '@nextui-org/react';
@@ -33,38 +31,6 @@ export default function UpdateProfileInformationForm({ user }: Props) {
       errorBag: 'updateProfileInformation',
       preserveScroll: true,
       onSuccess: () => clearPhotoFileInput(),
-    });
-  }
-
-  function selectNewPhoto() {
-    photoRef.current?.click();
-  }
-
-  function updatePhotoPreview() {
-    const photo = photoRef.current?.files?.[0];
-
-    if (!photo) {
-      return;
-    }
-
-    form.setData('photo', photo);
-
-    const reader = new FileReader();
-
-    reader.onload = e => {
-      setPhotoPreview(e.target?.result as string);
-    };
-
-    reader.readAsDataURL(photo);
-  }
-
-  function deletePhoto() {
-    router.delete(route('current-user-photo.destroy'), {
-      preserveScroll: true,
-      onSuccess: () => {
-        setPhotoPreview(null);
-        clearPhotoFileInput();
-      },
     });
   }
 

@@ -7,7 +7,6 @@ import ActionSection from '@/Components/ActionSection';
 import ConfirmsPassword from '@/Components/ConfirmsPassword';
 import useTypedPage from '@/Hooks/useTypedPage';
 import { Input, Button, Card, Divider } from '@nextui-org/react';
-import PrimaryButton from '@/Components/PrimaryButton';
 import useRoute from '@/Hooks/useRoute';
 
 interface Props {
@@ -17,7 +16,6 @@ interface Props {
 export default function TwoFactorAuthenticationForm({
   requiresConfirmation,
 }: Props) {
-  const route = useRoute();
   const page = useTypedPage();
   const [enabling, setEnabling] = useState(false);
   const [disabling, setDisabling] = useState(false);
@@ -132,7 +130,7 @@ export default function TwoFactorAuthenticationForm({
         );
       })()}
 
-      <div className="mt-3 max-w-xl text-sm text-gray-600 dark:text-gray-400">
+      <div className="mt-3 text-sm text-gray-600 dark:text-gray-400">
         <p>
           When two factor authentication is enabled, you will be prompted for a
           secure, random token during authentication. You may retrieve this
@@ -144,7 +142,7 @@ export default function TwoFactorAuthenticationForm({
         <div>
           {qrCode ? (
             <div>
-              <div className="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
+              <div className="mt-4 text-sm text-gray-600 dark:text-gray-400">
                 {confirming ? (
                   <p className="font-semibold">
                     To finish enabling two factor authentication, scan the
@@ -292,9 +290,6 @@ export default function TwoFactorAuthenticationForm({
         ) : (
           <div>
             <ConfirmsPassword onConfirm={enableTwoFactorAuthentication}>
-              {/* <Button type="button" disabled={enabling} color="primary">
-                Enable
-              </Button> */}
               <button
                 type="button"
                 disabled={enabling}

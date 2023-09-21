@@ -4,7 +4,6 @@ import React, { useRef, useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import ActionMessage from '@/Components/ActionMessage';
 import ActionSection from '@/Components/ActionSection';
-import DialogModal from '@/Components/DialogModal';
 import { Session } from '@/types';
 import {
   Input,
@@ -15,7 +14,6 @@ import {
   ModalHeader,
   ModalFooter,
 } from '@nextui-org/react';
-import { color } from 'framer-motion';
 
 interface Props {
   sessions: Session[];

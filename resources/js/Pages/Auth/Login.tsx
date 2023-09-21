@@ -1,5 +1,4 @@
 import { Link, useForm, Head } from '@inertiajs/react';
-import classNames from 'classnames';
 import React, { useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import AuthenticationCard from '@/Components/AuthenticationCard';
