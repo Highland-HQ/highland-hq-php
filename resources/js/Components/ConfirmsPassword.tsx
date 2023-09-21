@@ -3,11 +3,15 @@ import classNames from 'classnames';
 import React, { PropsWithChildren, useRef, useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import DialogModal from '@/Components/DialogModal';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import SecondaryButton from '@/Components/SecondaryButton';
-import { Input, Button } from '@nextui-org/react';
+import {
+  Input,
+  Button,
+  Modal,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalBody,
+} from '@nextui-org/react';
 
 interface Props {
   title?: string;
@@ -74,60 +78,48 @@ export default function ConfirmsPassword({
     <span>
       <span onClick={startConfirmingPassword}>{children}</span>
 
-      <DialogModal isOpen={confirmingPassword} onClose={closeModal}>
-        <DialogModal.Content title={title}>
-          {content}
+      <Modal
+        isOpen={confirmingPassword}
+        onClose={closeModal}
+        backdrop="blur"
+        size="xl"
+      >
+        <ModalContent>
+          <ModalHeader>{title}</ModalHeader>
 
-          <div className="mt-4">
-            {/* <TextInput
-              ref={passwordRef}
-              type="password"
-              className="mt-1 block w-3/4"
-              placeholder="Password"
-              value={form.password}
-              onChange={e =>
-                setForm({ ...form, password: e.currentTarget.value })
-              }
-            />
-
-            <InputError message={form.error} className="mt-2" /> */}
+          <ModalBody>
+            {content}
             <Input
+              autoFocus
               type="password"
+              variant="bordered"
               ref={passwordRef}
-              className="mt-1 block w-3/4"
               label="Password"
+              className="mt-2"
               value={form.password}
               onChange={e =>
                 setForm({ ...form, password: e.currentTarget.value })
               }
+              validationState={form.error ? 'invalid' : 'valid'}
               errorMessage={form.error}
             />
-          </div>
-        </DialogModal.Content>
+          </ModalBody>
 
-        <DialogModal.Footer>
-          {/* <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton> */}
-          <Button onClick={closeModal} color="default">
-            Cancel
-          </Button>
-
-          {/* <PrimaryButton
-            className={classNames('ml-2', { 'opacity-25': form.processing })}
-            onClick={confirmPassword}
-            disabled={form.processing}
-          >
-            {button}
-          </PrimaryButton> */}
-          <Button
-            className={classNames('ml-2', { 'opacity-25': form.processing })}
-            onClick={confirmPassword}
-            disabled={form.processing}
-            color="primary"
-          >
-            {button}
-          </Button>
-        </DialogModal.Footer>
-      </DialogModal>
+          <ModalFooter>
+            <Button onClick={closeModal} color="default" variant="light">
+              Cancel
+            </Button>
+            <Button
+              className={classNames('ml-2', { 'opacity-25': form.processing })}
+              onClick={confirmPassword}
+              disabled={form.processing}
+              color="primary"
+            >
+              {button}
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </span>
   );
 }

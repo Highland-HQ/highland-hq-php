@@ -97,69 +97,6 @@ export default function UpdateProfileInformationForm({ user }: Props) {
         </>
       )}
     >
-      {/* <!-- Profile Photo --> */}
-      {page.props.jetstream.managesProfilePhotos ? (
-        <div className="col-span-6 sm:col-span-4">
-          {/* <!-- Profile Photo File Input --> */}
-          <input
-            type="file"
-            className="hidden"
-            ref={photoRef}
-            onChange={updatePhotoPreview}
-          />
-
-          <InputLabel htmlFor="photo" value="Photo" />
-
-          {photoPreview ? (
-            // <!-- New Profile Photo Preview -->
-            <div className="mt-2">
-              <span
-                className="block rounded-full w-20 h-20"
-                style={{
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center center',
-                  backgroundImage: `url('${photoPreview}')`,
-                }}
-              ></span>
-            </div>
-          ) : (
-            // <!-- Current Profile Photo -->
-            <div className="mt-2">
-              <img
-                src={user.profile_photo_url}
-                alt={user.name}
-                className="rounded-full h-20 w-20 object-cover"
-              />
-            </div>
-          )}
-
-          <Button
-            type="button"
-            variant="solid"
-            color="default"
-            onClick={selectNewPhoto}
-            className="mt-2 mr-2"
-          >
-            Select A New Photo
-          </Button>
-
-          {user.profile_photo_path ? (
-            <Button
-              type="button"
-              variant="solid"
-              color="default"
-              onClick={deletePhoto}
-              className="mt-2"
-            >
-              Remove Photo
-            </Button>
-          ) : null}
-
-          <InputError message={form.errors.photo} className="mt-2" />
-        </div>
-      ) : null}
-
       {/* <!-- Name --> */}
       <div className="col-span-6 sm:col-span-4">
         <Input
@@ -180,7 +117,7 @@ export default function UpdateProfileInformationForm({ user }: Props) {
           type="email"
           variant="bordered"
           label="Email"
-          size="lg"
+          size="md"
           value={form.data.email}
           onChange={e => form.setData('email', e.currentTarget.value)}
           validationState={form.errors.email ? 'invalid' : 'valid'}

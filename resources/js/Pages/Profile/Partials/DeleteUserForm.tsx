@@ -4,7 +4,15 @@ import React, { useRef, useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import ActionSection from '@/Components/ActionSection';
 import DialogModal from '@/Components/DialogModal';
-import { Button, Input } from '@nextui-org/react';
+import {
+  Button,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+} from '@nextui-org/react';
 
 export default function DeleteUserForm() {
   const route = useRoute();
@@ -52,37 +60,47 @@ export default function DeleteUserForm() {
       </div>
 
       {/* <!-- Delete Account Confirmation Modal --> */}
-      <DialogModal isOpen={confirmingUserDeletion} onClose={closeModal}>
-        <DialogModal.Content title={'Delete Account'}>
-          Are you sure you want to delete your account? Once your account is
-          deleted, all of its resources and data will be permanently deleted.
-          Please enter your password to confirm you would like to permanently
-          delete your account.
-          <div className="mt-4">
-            <Input
-              type="password"
-              className="mt-1 block w-3/4"
-              label="Password"
-              value={form.data.password}
-              onChange={e => form.setData('password', e.currentTarget.value)}
-              validationState={form.errors.password ? 'invalid' : 'valid'}
-              errorMessage={form.errors.password}
-            />
-          </div>
-        </DialogModal.Content>
-        <DialogModal.Footer>
-          <Button onClick={closeModal} color="default">
-            Cancel
-          </Button>
-          <Button
-            onClick={deleteUser}
-            color="danger"
-            className={classNames('ml-2', { 'opacity-25': form.processing })}
-          >
-            Delete Account
-          </Button>
-        </DialogModal.Footer>
-      </DialogModal>
+      <Modal
+        size="xl"
+        backdrop="blur"
+        isOpen={confirmingUserDeletion}
+        onClose={closeModal}
+      >
+        <ModalContent>
+          <ModalHeader>Delete Account</ModalHeader>
+          <ModalBody>
+            Are you sure you want to delete your account? Once your account is
+            deleted, all of its resources and data will be permanently deleted.
+            Please enter your password to confirm you would like to permanently
+            delete your account.
+            <div className="mt-4">
+              <Input
+                autoFocus
+                type="password"
+                variant="bordered"
+                className="mt-2"
+                label="Password"
+                value={form.data.password}
+                onChange={e => form.setData('password', e.currentTarget.value)}
+                validationState={form.errors.password ? 'invalid' : 'valid'}
+                errorMessage={form.errors.password}
+              />
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={closeModal} color="default" variant="light">
+              Cancel
+            </Button>
+            <Button
+              onClick={deleteUser}
+              color="danger"
+              className={classNames('ml-2', { 'opacity-25': form.processing })}
+            >
+              Delete Account
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </ActionSection>
   );
 }

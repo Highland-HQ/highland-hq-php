@@ -6,8 +6,9 @@ import React, { useState } from 'react';
 import ActionSection from '@/Components/ActionSection';
 import ConfirmsPassword from '@/Components/ConfirmsPassword';
 import useTypedPage from '@/Hooks/useTypedPage';
-import { Input, Button, Card } from '@nextui-org/react';
+import { Input, Button, Card, Divider } from '@nextui-org/react';
 import PrimaryButton from '@/Components/PrimaryButton';
+import useRoute from '@/Hooks/useRoute';
 
 interface Props {
   requiresConfirmation: boolean;
@@ -16,6 +17,7 @@ interface Props {
 export default function TwoFactorAuthenticationForm({
   requiresConfirmation,
 }: Props) {
+  const route = useRoute();
   const page = useTypedPage();
   const [enabling, setEnabling] = useState(false);
   const [disabling, setDisabling] = useState(false);
@@ -177,12 +179,13 @@ export default function TwoFactorAuthenticationForm({
 
               {confirming && (
                 <div className="mt-4">
+                  <Divider className="my-4" />
                   <Input
+                    variant="bordered"
                     id="code"
                     type="text"
                     name="code"
                     label="Code"
-                    className="block mt-1 w-1/2"
                     inputMode="numeric"
                     autoFocus={true}
                     autoComplete="one-time-code"
@@ -278,7 +281,6 @@ export default function TwoFactorAuthenticationForm({
                 <Button
                   onClick={disableTwoFactorAuthentication}
                   type="button"
-                  className={classNames('mr-3', { 'opacity-25': disabling })}
                   disabled={disabling}
                   color="danger"
                 >
@@ -290,22 +292,16 @@ export default function TwoFactorAuthenticationForm({
         ) : (
           <div>
             <ConfirmsPassword onConfirm={enableTwoFactorAuthentication}>
-              <Button
-                onClick={enableTwoFactorAuthentication}
+              {/* <Button type="button" disabled={enabling} color="primary">
+                Enable
+              </Button> */}
+              <button
                 type="button"
-                className={classNames('mr-3', { 'opacity-25': enabling })}
                 disabled={enabling}
-                color="primary"
+                className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-unit-4 min-w-unit-20 h-unit-10 text-small gap-unit-2 rounded-medium [&>svg]:max-w-[theme(spacing.unit-8)] data-[pressed=true]:scale-[0.97] transition-transform-colors motion-reduce:transition-none bg-primary text-primary-foreground"
               >
                 Enable
-              </Button>
-              {/* <PrimaryButton
-                type="button"
-                className={classNames('mr-3', { 'opacity-25': enabling })}
-                disabled={enabling}
-              >
-                Enable
-              </PrimaryButton> */}
+              </button>
             </ConfirmsPassword>
           </div>
         )}

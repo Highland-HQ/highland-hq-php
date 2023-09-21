@@ -20,6 +20,6 @@ class AppServiceProvider extends ServiceProvider
    */
   public function boot(): void
   {
-    //
+    Inertia::share('assets', [asset('images/logos/highland-logo-black.png')]);
   }
 }

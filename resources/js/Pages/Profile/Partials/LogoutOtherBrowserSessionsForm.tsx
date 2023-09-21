@@ -6,7 +6,15 @@ import ActionMessage from '@/Components/ActionMessage';
 import ActionSection from '@/Components/ActionSection';
 import DialogModal from '@/Components/DialogModal';
 import { Session } from '@/types';
-import { Input, Button } from '@nextui-org/react';
+import {
+  Input,
+  Button,
+  Modal,
+  ModalContent,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
+} from '@nextui-org/react';
 import { color } from 'framer-motion';
 
 interface Props {
@@ -126,14 +134,22 @@ export default function LogoutOtherBrowserSessions({ sessions }: Props) {
       </div>
 
       {/* <!-- Log Out Other Devices Confirmation Modal --> */}
-      <DialogModal isOpen={confirmingLogout} onClose={closeModal}>
-        <DialogModal.Content title={'Log Out Other Browser Sessions'}>
-          Please enter your password to confirm you would like to log out of
-          your other browser sessions across all of your devices.
-          <div className="mt-4">
+      <Modal
+        isOpen={confirmingLogout}
+        onClose={closeModal}
+        backdrop="blur"
+        size="xl"
+      >
+        <ModalContent>
+          <ModalHeader>Log Out Other Browser Sessions</ModalHeader>
+          <ModalBody>
+            Please enter your password to confirm you would like to log out of
+            your other browser sessions across all of your devices.
             <Input
+              autoFocus
+              variant="bordered"
               type="password"
-              className="mt-1 block w-3/4"
+              className="mt-2"
               label="Password"
               ref={passwordRef}
               value={form.data.password}
@@ -141,24 +157,24 @@ export default function LogoutOtherBrowserSessions({ sessions }: Props) {
               validationState={form.errors.password ? 'invalid' : 'valid'}
               errorMessage={form.errors.password}
             />
-          </div>
-        </DialogModal.Content>
+          </ModalBody>
 
-        <DialogModal.Footer>
-          <Button onClick={closeModal} color="default">
-            Cancel
-          </Button>
+          <ModalFooter>
+            <Button onClick={closeModal} color="default">
+              Cancel
+            </Button>
 
-          <Button
-            onClick={logoutOtherBrowserSessions}
-            className={classNames('ml-2', { 'opacity-25': form.processing })}
-            disabled={form.processing}
-            color="primary"
-          >
-            Log Out Of Other Browser Sessions
-          </Button>
-        </DialogModal.Footer>
-      </DialogModal>
+            <Button
+              onClick={logoutOtherBrowserSessions}
+              className={classNames('ml-2', { 'opacity-25': form.processing })}
+              disabled={form.processing}
+              color="primary"
+            >
+              Log Out Of Other Browser Sessions
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </ActionSection>
   );
 }
