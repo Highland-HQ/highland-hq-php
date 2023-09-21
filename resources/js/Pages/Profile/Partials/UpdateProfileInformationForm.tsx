@@ -21,7 +21,6 @@ export default function UpdateProfileInformationForm({ user }: Props) {
     photo: null as File | null,
   });
   const route = useRoute();
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const photoRef = useRef<HTMLInputElement>(null);
   const page = useTypedPage();
   const [verificationLinkSent, setVerificationLinkSent] = useState(false);

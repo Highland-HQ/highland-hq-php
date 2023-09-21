@@ -4,7 +4,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   DropdownItem,
   DropdownTrigger,
   Dropdown,
@@ -13,10 +12,19 @@ import {
   Button,
 } from '@nextui-org/react';
 import useTypedPage from '@/Hooks/useTypedPage';
-import { Bell, BellDot, MessageSquare } from 'lucide-react';
+import { Bell, MessageSquare } from 'lucide-react';
+import { Link } from '@inertiajs/react';
+import useRoute from '@/Hooks/useRoute';
+import { router } from '@inertiajs/core';
 
 export const TopNav = () => {
   const page = useTypedPage();
+  const route = useRoute();
+
+  const logout = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.post(route('logout'));
+  };
 
   return (
     <Navbar maxWidth="full" isBordered>
@@ -47,12 +55,26 @@ export const TopNav = () => {
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
+            <DropdownItem
+              key="profile"
+              textValue={`Signed in as ${page.props.auth.user?.email}`}
+              className="h-14 gap-2"
+            >
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold">{page.props.auth.user?.email}</p>
             </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem key="storefront" textValue="Storefront">
+              <Link href={route('storefront.index')}>Storefront</Link>
+            </DropdownItem>
+            <DropdownItem key="settings" textValue="My Settings">
+              <Link href={route('profile.show')}>My Profile</Link>
+            </DropdownItem>
+            <DropdownItem
+              key="logout"
+              textValue="Log Out"
+              color="danger"
+              onClick={logout}
+            >
               Log Out
             </DropdownItem>
           </DropdownMenu>

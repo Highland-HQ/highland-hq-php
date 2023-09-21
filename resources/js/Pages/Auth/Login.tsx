@@ -13,7 +13,6 @@ interface Props {
 
 export default function Login({ canResetPassword, status }: Props) {
   const route = useRoute();
-  const page = useTypedPage();
   const form = useForm({
     email: '',
     password: '',
@@ -96,6 +95,7 @@ export default function Login({ canResetPassword, status }: Props) {
               size="md"
               color="foreground"
               underline="hover"
+              as="div"
             >
               <Link href={route('password.request')}>
                 Forgot your password?
@@ -103,8 +103,8 @@ export default function Login({ canResetPassword, status }: Props) {
             </NextLink>
           )}
 
-          <div className="flex items-center justify-end">
-            <NextLink size="md" color="foreground" underline="hover">
+          <div className="flex items-center justify-between md:justify-end">
+            <NextLink as="div" size="md" color="foreground" underline="hover">
               <Link href={route('register')}>Need an account?</Link>
             </NextLink>
 

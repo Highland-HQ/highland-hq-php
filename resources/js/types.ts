@@ -1,4 +1,5 @@
 import { DropdownItemVariantProps } from '@nextui-org/react';
+import { ReactNode } from 'react';
 
 type DateTime = string;
 
@@ -109,6 +110,7 @@ export interface DropdownItemType {
   name?: string;
   color?: string;
   path?: string;
+  icon?: ReactNode;
   onClick?: (e: React.FormEvent) => void;
 }
 
