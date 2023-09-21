@@ -79,7 +79,11 @@ export const SideNav = () => {
 
   const generateListboxItems = (links: SideNavLink[]) => {
     return links.map(({ name, path, icon }: SideNavLink) => (
-      <ListboxItem key={name.toLowerCase()} startContent={icon}>
+      <ListboxItem
+        textValue={name.toLowerCase()}
+        key={name.toLowerCase()}
+        startContent={icon}
+      >
         <Link className="w-full" href={route(path ? path : '/')}>
           <div className="w-full">{name}</div>
         </Link>
@@ -107,7 +111,11 @@ export const SideNav = () => {
 
   return (
     <div className="h-screen w-60 fixed bg-background px-4 border-r border-r-divider">
-      <Listbox color="secondary" variant="shadow">
+      <Listbox
+        color="secondary"
+        variant="shadow"
+        aria-label="Dashboard Nav Items"
+      >
         {navSections}
       </Listbox>
     </div>

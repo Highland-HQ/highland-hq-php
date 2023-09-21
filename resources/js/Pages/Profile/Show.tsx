@@ -6,7 +6,6 @@ import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm';
 import useTypedPage from '@/Hooks/useTypedPage';
 import SectionBorder from '@/Components/SectionBorder';
-import AppLayout from '@/Layouts/AppLayout';
 import { Session } from '@/types';
 import { StorefrontLayout } from '@/Layouts/StorefrontLayout';
 

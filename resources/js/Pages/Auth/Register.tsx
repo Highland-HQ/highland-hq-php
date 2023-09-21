@@ -31,7 +31,7 @@ export default function Register() {
     <AuthenticationCard heading="Register For An Account">
       <Head title="Register" />
 
-      <div className="w-96">
+      <div className="md:w-96">
         <form onSubmit={onSubmit}>
           <div>
             <Input
@@ -157,7 +157,7 @@ export default function Register() {
           )}
 
           <div className="flex items-center justify-end mt-4">
-            <NextLink size="md" color="foreground" underline="hover">
+            <NextLink as="div" size="md" color="foreground" underline="hover">
               <Link href={route('login')}>Already registered?</Link>
             </NextLink>
 

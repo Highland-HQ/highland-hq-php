@@ -6,8 +6,7 @@ import React, { useState } from 'react';
 import ActionSection from '@/Components/ActionSection';
 import ConfirmsPassword from '@/Components/ConfirmsPassword';
 import useTypedPage from '@/Hooks/useTypedPage';
-import { Input, Button, Card, Divider } from '@nextui-org/react';
-import useRoute from '@/Hooks/useRoute';
+import { Input, Button, Divider } from '@nextui-org/react';
 
 interface Props {
   requiresConfirmation: boolean;

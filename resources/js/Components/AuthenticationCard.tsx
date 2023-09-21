@@ -1,6 +1,5 @@
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Button, Card, CardBody, CardHeader } from '@nextui-org/react';
-import useTypedPage from '@/Hooks/useTypedPage';
 import useRoute from '@/Hooks/useRoute';
 import { Link } from '@inertiajs/react';
 import { ChevronLeft } from 'lucide-react';
@@ -17,8 +16,8 @@ export default function AuthenticationCard({
   const route = useRoute();
 
   return (
-    <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-      <div className="max-w-xl flex flex-col items-center justify-center">
+    <div className="min-h-screen max-w-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900">
+      <div className="flex flex-col items-center justify-center mx-4 lg:mx-0">
         <Button
           as={Link}
           startContent={<ChevronLeft />}
@@ -29,7 +28,7 @@ export default function AuthenticationCard({
         >
           Home
         </Button>
-        <Card className="w-full p-2">
+        <Card className="w-full">
           <CardHeader>
             <h1 className="px-3 text-2xl font-bold">
               {heading || 'Lorem Ipsum'}
