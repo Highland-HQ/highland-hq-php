@@ -4,19 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Uuids;
 
 class Collection extends Model
 {
-  use HasFactory;
+    use HasFactory;
+    use Uuids;
 
-  protected $fillable = ['title', 'launch_date', 'description', 'status'];
+    protected $primaryKey = 'id';
 
-  protected $casts = [
-    'launch_date' => 'datetime',
-  ];
+    protected $keyType = 'string';
 
-  public function products()
-  {
-    return $this->belongsToMany(Product::class);
-  }
+    public $incrementing = false;
+
+    protected $fillable = ['title', 'launch_date', 'description', 'status'];
+
+    protected $casts = [
+        'launch_date' => 'datetime',
+    ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }
